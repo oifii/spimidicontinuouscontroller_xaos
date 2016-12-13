@@ -1,37 +1,26 @@
 /*
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//the midinote.c, midiprogramchange.c and midicontinuouscontroller.c functions are portmidi equivalents of
-//the midinote.jar, midiprogramchange.jar and midicontinuouscontroller.jar java class archives which are java sound midi equivalents of
-//the midi_autohotkey-midi-function_example-note-on-note-off.ahk, midi_autohotkey-midi-function_example-program-change.ahk and midi_autohotkey-midi-function_example-continuous-controller.ahk 
-//which are based on autohotkey.exe script midi library midi_autohotkey-midi-functions.ahk (that can be found in folder http://www.oifii.org/ns-org/nsd/ar/cp/midi_autohotkey/)
-//
-//portmidi, portable c midi library compiled with this project can be found in folder http://www.oifii.org/ns-org/nsd/ar/cp/midi_portmidi-src-217/ 
-//
-//java sound midi class archives equivalent examples (midinote.jar, midiprogramchange.jar and midicontinuouscontroller.jar) can be found in folders:
-//http://www.oifii.org/ns-org/nsd/ar/cp/midi_java-sound-midi_midinote/
-//http://www.oifii.org/ns-org/nsd/ar/cp/midi_java-sound-midi_midiprogramchange/
-//http://www.oifii.org/ns-org/nsd/ar/cp/midi_java-sound-midi_midicontinuouscontroller/
-//http://www.oifii.org/ns-org/nsd/ar/cp/midi_java-sound-midi_midicontinuouscontrollerraw/
-//
-//portmidi based midinote.c, midiprogramchange.c and midicontinuouscontroller.c can be found in folder:
-//http://www.oifii.org/ns-org/nsd/ar/cp/midi_portmidi-src-217_midinote/
-//http://www.oifii.org/ns-org/nsd/ar/cp/midi_portmidi-src-217_midiprogramchange/
-//http://www.oifii.org/ns-org/nsd/ar/cp/midi_portmidi-src-217_midicontinuouscontroller/
-//
-//
-//2011dec10, version 0.2, spi, revised to properly implement http://www.midi.org/techspecs/midimessages.php, in that table channel id is a value between 0 and 15 like inside this code but
-//							   new main program interface parameters implements channel id for user with integer value between 1 and 16
-//							   tests: when closing mididevice, opened with non-zero latency, cc 64 value 0 are sent on all channels
-//							   default latency is zero if not specified, no undesirable cc 64 values will be sent
-//							   -c option does not work for the time being, on exit always closes mididevice, this because atexit(exit) is called in pminit(), see pmwin.c, don't know the work around for now
-//2011oct23, version 0.1, spi, created stephane.poirier@nakedsoftware.org
-//
-//2014may04, version 0.2, spi, bugfix (see comment in code tagged //spi 2014) 
-//2014may04, version 0.2, spi, renamed spimidicontinuouscontroller.c
-//
-//copyright 2012, stephane.poirier@nakedsoftware.org
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-*/
+ * Copyright (c) 2010-2016 Stephane Poirier
+ *
+ * stephane.poirier@oifii.org
+ *
+ * Stephane Poirier
+ * 3532 rue Ste-Famille, #3
+ * Montreal, QC, H2X 2L1
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 
 #include "portmidi.h"
 #include "porttime.h"
